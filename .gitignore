@@ -1,0 +1,7 @@
+# Tài liệu nội bộ — không đưa lên repo
+CLAUDE.md
+KE-HOACH-PLUGIN-TRUY-XUAT-NGUON-GOC.md
+.claude/
+
+# Hệ thống
+.DS_Store
