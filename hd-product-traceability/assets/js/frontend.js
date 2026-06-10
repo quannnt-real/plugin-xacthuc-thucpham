@@ -167,12 +167,20 @@
 	 * Gắn sự kiện (event delegation).
 	 * ----------------------------------------------------------------- */
 	document.addEventListener( 'click', function ( event ) {
-		// 1) Nút mở modal.
+		if ( ! event.target || 'function' !== typeof event.target.closest ) {
+			return;
+		}
+
+		// 1) Nút mở modal. preventDefault + stopPropagation: nút có thể nằm
+		// gần/trong vùng bị theme bọc thẻ <a> (link "Liên hệ" của giá, link
+		// product card) hoặc có JS điều hướng riêng — click vào nút truy xuất
+		// tuyệt đối không được điều hướng/bubble sang handler của theme.
 		var trigger = event.target.closest( '[data-hdpt-modal]' );
 		if ( trigger ) {
 			var modal = document.getElementById( trigger.getAttribute( 'data-hdpt-modal' ) );
 			if ( modal ) {
 				event.preventDefault();
+				event.stopPropagation();
 				openModal( modal );
 			}
 			return;
@@ -183,6 +191,8 @@
 		if ( closer ) {
 			var openedByCloser = closer.closest( '.hdpt-modal' );
 			if ( openedByCloser ) {
+				event.preventDefault();
+				event.stopPropagation();
 				closeModal( openedByCloser );
 			}
 			return;
@@ -191,6 +201,8 @@
 		// 3) Toggle accordion.
 		var header = event.target.closest( '.hdpt-acc-header' );
 		if ( header && header.closest( '.hdpt-modal' ) ) {
+			event.preventDefault();
+			event.stopPropagation();
 			togglePanel( header );
 		}
 	} );
@@ -200,47 +212,90 @@
 	 * summary của WooCommerce, PHP in nút (ẩn) ở footer kèm [data-hdpt-fallback];
 	 * JS di chuyển nút vào vị trí hợp lý trong layout rồi hiển thị.
 	 * ----------------------------------------------------------------- */
+	/**
+	 * Tìm thẻ <a> tổ tiên NGOÀI CÙNG của một phần tử (nếu có).
+	 *
+	 * Theme có thể thay HTML giá bằng thẻ <a> (filter woocommerce_get_price_html)
+	 * hoặc bọc cả card sản phẩm trong <a>; <a> lồng <a> còn bị trình duyệt
+	 * tự tách lại khi parse. Nút truy xuất tuyệt đối không được nằm trong
+	 * bất kỳ <a> nào — click sẽ bị anchor nuốt/điều hướng.
+	 *
+	 * @param {Element} el Phần tử cần kiểm tra.
+	 * @return {Element|null} Thẻ <a> ngoài cùng, hoặc null nếu không nằm trong <a>.
+	 */
+	function outermostAnchor( el ) {
+		var found = null;
+		var node = el && el.closest ? el.closest( 'a' ) : null;
+		while ( node ) {
+			found = node;
+			node = node.parentElement ? node.parentElement.closest( 'a' ) : null;
+		}
+		return found;
+	}
+
+	/**
+	 * Chèn nút theo anchor, tự thoát ra ngoài nếu điểm chèn nằm trong thẻ <a>.
+	 *
+	 * @param {Element} anchor Phần tử mốc.
+	 * @param {string}  mode   'append' (chèn vào cuối) hoặc 'after' (chèn ngay sau).
+	 * @param {Element} btn    Nút cần chèn.
+	 */
+	function insertOutsideAnchors( anchor, mode, btn ) {
+		var wrapperA = outermostAnchor( anchor );
+		if ( wrapperA ) {
+			// Điểm chèn nằm trong link -> chèn ra NGOÀI, ngay sau thẻ <a> ngoài cùng.
+			wrapperA.insertAdjacentElement( 'afterend', btn );
+			return;
+		}
+		if ( 'append' === mode ) {
+			anchor.appendChild( btn );
+		} else {
+			anchor.insertAdjacentElement( 'afterend', btn );
+		}
+	}
+
 	function placeFallbackButtons() {
 		var fallbacks = document.querySelectorAll( '[data-hdpt-fallback]' );
 		if ( ! fallbacks.length ) {
 			return;
 		}
 
-		// Thứ tự ưu tiên anchor:
-		// (1) phần summary của product (append -> nằm SAU mọi nội dung trong
-		//     summary, kể cả nút "Liên hệ báo giá" theme chèn ở priority 31);
-		// (2) các widget Elementor của khối mua hàng/giá (chèn ngay sau);
-		// (3) container Elementor single product template;
-		// (4) container sản phẩm / cuối nội dung chính.
+		// Chỉ dùng container ỔN ĐỊNH cấp cao, KHÔNG dựa vào phần tử giá
+		// (.price/.amount/.woocommerce-Price-amount) — vùng giá có thể đã bị
+		// theme thay bằng thẻ <a> "Liên hệ" và DOM quanh nó không còn tin cậy.
+		// Thứ tự: summary của single product -> container Elementor single
+		// product -> container sản phẩm -> vùng nội dung chính.
 		var anchors = [
 			{ selector: '.single-product div.product .summary', mode: 'append' },
-			{ selector: '.single-product div.product a[href^="tel:"]', mode: 'after' },
-			{ selector: '.elementor-widget-woocommerce-product-add-to-cart', mode: 'after' },
-			{ selector: '.elementor-widget-woocommerce-product-price', mode: 'after' },
 			{ selector: '[data-elementor-type="product"]', mode: 'append' },
+			{ selector: '.elementor-location-single', mode: 'append' },
 			{ selector: '.single-product div.product', mode: 'append' },
-			{ selector: 'main, #main, .site-main, #content', mode: 'append' }
+			{ selector: 'main, #main, .site-main, #content, #primary', mode: 'append' }
 		];
 
 		Array.prototype.forEach.call( fallbacks, function ( wrap ) {
 			var btn = wrap.firstElementChild;
 			if ( ! btn ) {
-				wrap.remove();
+				if ( wrap.parentNode ) {
+					wrap.parentNode.removeChild( wrap );
+				}
 				return;
 			}
 
 			var placed = false;
 			for ( var i = 0; i < anchors.length && ! placed; i++ ) {
-				var anchor = document.querySelector( anchors[ i ].selector );
-				if ( ! anchor ) {
-					continue;
+				// Mỗi bước thử đều được bọc try/catch: một selector lỗi/không khớp
+				// không bao giờ được phép dừng cả chuỗi chèn.
+				try {
+					var anchor = document.querySelector( anchors[ i ].selector );
+					if ( ! anchor ) {
+						continue;
+					}
+					insertOutsideAnchors( anchor, anchors[ i ].mode, btn );
+					placed = true;
+				} catch ( e ) {
+					// Bỏ qua, thử anchor kế tiếp.
 				}
-				if ( 'append' === anchors[ i ].mode ) {
-					anchor.appendChild( btn );
-				} else {
-					anchor.insertAdjacentElement( 'afterend', btn );
-				}
-				placed = true;
 			}
 
 			if ( ! placed ) {
@@ -249,14 +304,53 @@
 				wrap.insertAdjacentElement( 'beforebegin', btn );
 			}
 
-			wrap.remove();
+			// Hậu kiểm: nếu vì lý do nào đó nút vẫn nằm trong <a>, kéo ra ngoài.
+			try {
+				var trapped = outermostAnchor( btn );
+				if ( trapped ) {
+					trapped.insertAdjacentElement( 'afterend', btn );
+				}
+			} catch ( e ) {
+				// Không chặn luồng.
+			}
+
+			if ( wrap.parentNode ) {
+				wrap.parentNode.removeChild( wrap );
+			}
 		} );
 	}
 
+	/**
+	 * Đảm bảo mọi modal nằm ở CUỐI <body>: không kẹt trong cây DOM của
+	 * summary/card (vùng có thể bị vỡ bởi <a> lồng nhau) và không nằm trong
+	 * wrapper bị theme ẩn/đổi vị trí.
+	 */
+	function relocateModals() {
+		var modals = document.querySelectorAll( '.hdpt-modal' );
+		Array.prototype.forEach.call( modals, function ( modal ) {
+			if ( modal.parentElement !== document.body ) {
+				document.body.appendChild( modal );
+			}
+		} );
+	}
+
+	function onReady() {
+		try {
+			placeFallbackButtons();
+		} catch ( e ) {
+			// Fallback lỗi không được phép làm chết phần modal/accordion.
+		}
+		try {
+			relocateModals();
+		} catch ( e ) {
+			// Như trên.
+		}
+	}
+
 	if ( 'loading' === document.readyState ) {
-		document.addEventListener( 'DOMContentLoaded', placeFallbackButtons );
+		document.addEventListener( 'DOMContentLoaded', onReady );
 	} else {
-		placeFallbackButtons();
+		onReady();
 	}
 
 	document.addEventListener( 'keydown', function ( event ) {
