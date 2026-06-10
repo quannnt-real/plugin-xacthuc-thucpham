@@ -94,6 +94,10 @@ Mặc định gỡ plugin **không xóa dữ liệu** (cài đặt + dữ liệu
 
 ## Changelog
 
+### 1.1.2
+- Tăng độ ưu tiên CSS toàn diện: mọi thuộc tính giao diện nhận từ trang cài đặt (màu, padding, bo góc, font…) dùng `!important` scoped trong class `hdpt-`, chống theme/Elementor/WooCommerce ghi đè làm mất tùy biến.
+- CSS/JS của plugin enqueue ở priority 999 — luôn in sau stylesheet của theme/Elementor.
+
 ### 1.1.1
 - Chuyển mã nguồn plugin ra thư mục gốc repo; chuyển hướng dẫn sang README.md.
 - Tinh chỉnh CSS nút/modal (thêm `!important` cho các thuộc tính cốt lõi) tăng tương thích với theme can thiệp mạnh.

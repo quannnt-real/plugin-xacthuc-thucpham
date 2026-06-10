@@ -43,7 +43,9 @@ class HDPT_Frontend {
 		add_shortcode( 'hd_traceability_button', array( $this, 'shortcode_button' ) );
 
 		add_action( 'wp', array( $this, 'setup_auto_insert' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_enqueue_assets' ) );
+		// Priority 999: enqueue SAU theme/Elementor/WooCommerce để stylesheet
+		// của plugin in ra sau cùng -> thắng các rule cùng specificity.
+		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_enqueue_assets' ), 999 );
 		// Priority 4: fallback phải chạy TRƯỚC render_modals (5) để modal
 		// của sản phẩm fallback kịp được ghi nhận và render.
 		add_action( 'wp_footer', array( $this, 'render_fallback_button' ), 4 );

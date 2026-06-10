@@ -1,10 +1,12 @@
-# Tài liệu nội bộ — không đưa lên repo
-CLAUDE.md
-KE-HOACH-PLUGIN-TRUY-XUAT-NGUON-GOC.md
+# Tài liệu nội bộ — KHÔNG đưa lên repo bất kỳ file .md nào
+# ngoài README.md (hướng dẫn sử dụng), kể cả CLAUDE.md.
+*.md
+!README.md
 .claude/
 
 # Hệ thống
 .DS_Store
+._*
 
 # Bản đóng gói phát hành — không đưa lên repo
 *.zip
