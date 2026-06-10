@@ -154,12 +154,23 @@ class HDPT_Settings {
 			'select',
 			array(
 				'options'     => array(
-					'after_add_to_cart' => __( 'Sau nút thêm vào giỏ', 'hd-product-traceability' ),
-					'after_summary'     => __( 'Sau phần tóm tắt sản phẩm', 'hd-product-traceability' ),
-					'after_tabs'        => __( 'Sau tabs mô tả', 'hd-product-traceability' ),
-					'none'              => __( 'Không tự động chèn', 'hd-product-traceability' ),
+					'summary'       => __( 'Trong phần tóm tắt sản phẩm (sau khối mua hàng/nút liên hệ)', 'hd-product-traceability' ),
+					'after_summary' => __( 'Sau phần tóm tắt sản phẩm', 'hd-product-traceability' ),
+					'meta_end'      => __( 'Cuối phần thông tin sản phẩm (sau SKU/danh mục)', 'hd-product-traceability' ),
+					'none'          => __( 'Không tự động chèn', 'hd-product-traceability' ),
 				),
-				'description' => __( 'Vị trí nút trên trang sản phẩm. Chọn "Không tự động chèn" nếu chỉ dùng shortcode/widget.', 'hd-product-traceability' ),
+				'description' => __( 'Các vị trí đều hoạt động kể cả khi sản phẩm không mua được/không có giá. Chọn "Không tự động chèn" nếu chỉ dùng shortcode/widget.', 'hd-product-traceability' ),
+			)
+		);
+		$this->add_field(
+			'btn_position_priority',
+			__( 'Priority trong phần tóm tắt', 'hd-product-traceability' ),
+			'hdpt_section_button',
+			'number',
+			array(
+				'min'         => 1,
+				'max'         => 100,
+				'description' => __( 'Chỉ áp dụng cho vị trí "Trong phần tóm tắt sản phẩm". Mặc định 35 — đặt lớn hơn 31 nếu theme chèn nút liên hệ ở priority 31 để nút truy xuất nằm phía sau.', 'hd-product-traceability' ),
 			)
 		);
 
@@ -391,11 +402,12 @@ class HDPT_Settings {
 
 		// Số nguyên (kèm giới hạn).
 		$number_keys = array(
-			'btn_radius'      => array( 0, 60 ),
-			'overlay_opacity' => array( 0, 100 ),
-			'modal_radius'    => array( 0, 60 ),
-			'modal_max_width' => array( 320, 1600 ),
-			'font_size'       => array( 10, 28 ),
+			'btn_radius'            => array( 0, 60 ),
+			'btn_position_priority' => array( 1, 100 ),
+			'overlay_opacity'       => array( 0, 100 ),
+			'modal_radius'          => array( 0, 60 ),
+			'modal_max_width'       => array( 320, 1600 ),
+			'font_size'             => array( 10, 28 ),
 		);
 		foreach ( $number_keys as $key => $range ) {
 			$number        = isset( $input[ $key ] ) ? absint( $input[ $key ] ) : $defaults[ $key ];
@@ -406,11 +418,19 @@ class HDPT_Settings {
 		$select_keys = array(
 			'btn_padding'  => array( 'small', 'medium', 'large' ),
 			'btn_width'    => array( 'auto', 'full' ),
-			'btn_position' => array( 'after_add_to_cart', 'after_summary', 'after_tabs', 'none' ),
+			'btn_position' => array( 'summary', 'after_summary', 'meta_end', 'none' ),
 			'modal_effect' => array( 'fade', 'slide' ),
 			'acc_default'  => array( 'first_open', 'all_closed' ),
 			'font_source'  => array( 'inherit', 'system', 'google' ),
 		);
+		// Migrate giá trị vị trí cũ (hook trong form add-to-cart) nếu form còn gửi lên.
+		$legacy_positions = array(
+			'after_add_to_cart' => 'summary',
+			'after_tabs'        => 'after_summary',
+		);
+		if ( isset( $input['btn_position'], $legacy_positions[ $input['btn_position'] ] ) ) {
+			$input['btn_position'] = $legacy_positions[ $input['btn_position'] ];
+		}
 		foreach ( $select_keys as $key => $allowed ) {
 			$value         = isset( $input[ $key ] ) ? sanitize_key( $input[ $key ] ) : '';
 			$clean[ $key ] = in_array( $value, $allowed, true ) ? $value : $defaults[ $key ];

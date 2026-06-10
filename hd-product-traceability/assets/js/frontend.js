@@ -206,16 +206,20 @@
 			return;
 		}
 
-		// Thứ tự ưu tiên anchor: khối add-to-cart -> nút liên hệ (tel:) ->
-		// giá -> summary -> container sản phẩm.
+		// Thứ tự ưu tiên anchor:
+		// (1) phần summary của product (append -> nằm SAU mọi nội dung trong
+		//     summary, kể cả nút "Liên hệ báo giá" theme chèn ở priority 31);
+		// (2) các widget Elementor của khối mua hàng/giá (chèn ngay sau);
+		// (3) container Elementor single product template;
+		// (4) container sản phẩm / cuối nội dung chính.
 		var anchors = [
-			{ selector: '.single-product div.product form.cart', mode: 'after' },
-			{ selector: '.elementor-widget-woocommerce-product-add-to-cart', mode: 'after' },
-			{ selector: '.single-product div.product a[href^="tel:"]', mode: 'after' },
-			{ selector: '.single-product div.product p.price', mode: 'after' },
-			{ selector: '.elementor-widget-woocommerce-product-price', mode: 'after' },
 			{ selector: '.single-product div.product .summary', mode: 'append' },
-			{ selector: '.single-product div.product', mode: 'append' }
+			{ selector: '.single-product div.product a[href^="tel:"]', mode: 'after' },
+			{ selector: '.elementor-widget-woocommerce-product-add-to-cart', mode: 'after' },
+			{ selector: '.elementor-widget-woocommerce-product-price', mode: 'after' },
+			{ selector: '[data-elementor-type="product"]', mode: 'append' },
+			{ selector: '.single-product div.product', mode: 'append' },
+			{ selector: 'main, #main, .site-main, #content', mode: 'append' }
 		];
 
 		Array.prototype.forEach.call( fallbacks, function ( wrap ) {

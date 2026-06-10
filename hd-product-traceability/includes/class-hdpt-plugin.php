@@ -111,7 +111,12 @@ final class HDPT_Plugin {
 			'btn_radius'        => 4,
 			'btn_padding'       => 'medium', // small | medium | large.
 			'btn_width'         => 'auto',   // auto | full.
-			'btn_position'      => 'after_add_to_cart', // after_add_to_cart | after_summary | after_tabs | none.
+			// Vị trí auto-insert: chỉ dùng các hook LUÔN chạy kể cả khi sản phẩm
+			// không mua được (không phụ thuộc form add-to-cart).
+			'btn_position'      => 'summary', // summary | after_summary | meta_end | none.
+			// Priority trên hook woocommerce_single_product_summary (vị trí summary).
+			// Mặc định 35 — lớn hơn 31 để nằm SAU nút "Liên hệ báo giá" nếu theme chèn ở 31.
+			'btn_position_priority' => 35,
 
 			// 2. Modal.
 			'overlay_color'     => '#000000',
@@ -160,7 +165,21 @@ final class HDPT_Plugin {
 		if ( ! is_array( $saved ) ) {
 			$saved = array();
 		}
-		return wp_parse_args( $saved, self::get_default_settings() );
+		$settings = wp_parse_args( $saved, self::get_default_settings() );
+
+		// Migrate tự động giá trị vị trí cũ (phiên bản đầu dùng hook bên trong
+		// form add-to-cart — không chạy khi sản phẩm không purchasable).
+		// Remap khi đọc nên site cũ hoạt động đúng ngay, không cần admin cấu hình lại;
+		// giá trị mới sẽ được ghi xuống DB ở lần lưu cài đặt kế tiếp.
+		$legacy_positions = array(
+			'after_add_to_cart' => 'summary',
+			'after_tabs'        => 'after_summary',
+		);
+		if ( isset( $legacy_positions[ $settings['btn_position'] ] ) ) {
+			$settings['btn_position'] = $legacy_positions[ $settings['btn_position'] ];
+		}
+
+		return $settings;
 	}
 
 	/**

@@ -15,23 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class HDPT_Frontend {
 
 	/**
-	 * Map vị trí auto-insert -> hook WooCommerce + priority.
-	 *
-	 * Lưu ý: vị trí "Sau nút thêm vào giỏ" dùng woocommerce_single_product_summary
-	 * priority 35 (khối add-to-cart render ở priority 30) thay vì hook bên trong
-	 * form.cart — vì form này KHÔNG render khi sản phẩm không mua được
-	 * (woocommerce_is_purchasable = false) hoặc không có giá. Nhờ vậy nút luôn
-	 * hiển thị độc lập với trạng thái mua hàng/giá của sản phẩm.
-	 *
-	 * @var array
-	 */
-	private static $position_hooks = array(
-		'after_add_to_cart' => array( 'woocommerce_single_product_summary', 35 ),
-		'after_summary'     => array( 'woocommerce_after_single_product_summary', 5 ),
-		'after_tabs'        => array( 'woocommerce_after_single_product_summary', 15 ),
-	);
-
-	/**
 	 * Danh sách product ID đã render nút trên trang (để in modal ở footer).
 	 *
 	 * @var int[]
@@ -69,6 +52,11 @@ class HDPT_Frontend {
 
 	/**
 	 * Gắn hook auto-insert nút vào trang sản phẩm theo vị trí đã chọn.
+	 *
+	 * Chỉ dùng các hook LUÔN chạy kể cả khi sản phẩm không mua được
+	 * (woocommerce_is_purchasable = false) hoặc không có giá — tuyệt đối
+	 * không dùng hook nằm bên trong form add-to-cart (form không render
+	 * với sản phẩm không purchasable, hoặc bị theme remove_action).
 	 */
 	public function setup_auto_insert() {
 		if ( is_admin() ) {
@@ -78,11 +66,19 @@ class HDPT_Frontend {
 		$settings = HDPT_Plugin::get_settings();
 		$position = $settings['btn_position'];
 
-		if ( 'none' === $position || ! isset( self::$position_hooks[ $position ] ) ) {
-			return;
+		// Vị trí summary: priority cấu hình được (mặc định 35 — sau nút
+		// "Liên hệ báo giá" nếu theme chèn ở priority 31).
+		$position_hooks = array(
+			'summary'       => array( 'woocommerce_single_product_summary', min( max( absint( $settings['btn_position_priority'] ), 1 ), 100 ) ),
+			'after_summary' => array( 'woocommerce_after_single_product_summary', 5 ),
+			'meta_end'      => array( 'woocommerce_product_meta_end', 10 ),
+		);
+
+		if ( ! isset( $position_hooks[ $position ] ) ) {
+			return; // 'none' hoặc giá trị không hợp lệ.
 		}
 
-		list( $hook, $priority ) = self::$position_hooks[ $position ];
+		list( $hook, $priority ) = $position_hooks[ $position ];
 		add_action( $hook, array( $this, 'auto_insert_button' ), $priority );
 	}
 

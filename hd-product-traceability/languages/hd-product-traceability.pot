@@ -44,7 +44,7 @@ msgstr ""
 msgid "Ba trường trên là bắt buộc — thiếu một trong ba thì mục \"Thông tin doanh nghiệp\" sẽ không hiển thị ngoài trang sản phẩm."
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:171
+#: includes/admin/class-hdpt-settings.php:182
 msgid "Bo góc modal (px)"
 msgstr ""
 
@@ -52,11 +52,11 @@ msgstr ""
 msgid "Bo góc nút (px)"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:438
+#: includes/admin/class-hdpt-settings.php:458
 msgid "Bạn không có quyền truy cập trang này."
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:338
+#: includes/admin/class-hdpt-settings.php:349
 msgid "Bật"
 msgstr ""
 
@@ -73,6 +73,10 @@ msgstr ""
 msgid "Chưa chọn file"
 msgstr ""
 
+#: includes/admin/class-hdpt-settings.php:173
+msgid "Chỉ áp dụng cho vị trí \"Trong phần tóm tắt sản phẩm\". Mặc định 35 — đặt lớn hơn 31 nếu theme chèn nút liên hệ ở priority 31 để nút truy xuất nằm phía sau."
+msgstr ""
+
 #: includes/admin/class-hdpt-product-data.php:218
 msgid "Chọn file PDF"
 msgstr ""
@@ -81,16 +85,24 @@ msgstr ""
 msgid "Chọn file PDF truy xuất"
 msgstr ""
 
+#: includes/admin/class-hdpt-settings.php:159
+msgid "Cuối phần thông tin sản phẩm (sau SKU/danh mục)"
+msgstr ""
+
 #: includes/admin/class-hdpt-settings.php:55
-#: includes/admin/class-hdpt-settings.php:442
+#: includes/admin/class-hdpt-settings.php:462
 msgid "Cài đặt Truy xuất nguồn gốc"
+msgstr ""
+
+#: includes/admin/class-hdpt-settings.php:162
+msgid "Các vị trí đều hoạt động kể cả khi sản phẩm không mua được/không có giá. Chọn \"Không tự động chèn\" nếu chỉ dùng shortcode/widget."
 msgstr ""
 
 #: includes/elementor/class-hdpt-widget-button.php:100
 msgid "Căn lề"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:228
+#: includes/admin/class-hdpt-settings.php:239
 msgid "Cỡ chữ cơ bản (px)"
 msgstr ""
 
@@ -99,15 +111,15 @@ msgid "Dùng file này"
 msgstr ""
 
 #: includes/admin/class-hdpt-product-data.php:180
-#: includes/class-hdpt-plugin.php:145
+#: includes/class-hdpt-plugin.php:150
 msgid "Email"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:180
+#: includes/admin/class-hdpt-settings.php:191
 msgid "Fade (mờ dần)"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:207
+#: includes/admin/class-hdpt-settings.php:218
 msgid "Font chữ"
 msgstr ""
 
@@ -115,7 +127,7 @@ msgstr ""
 msgid "Giữa"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:214
+#: includes/admin/class-hdpt-settings.php:225
 msgid "Google Font"
 msgstr ""
 
@@ -123,11 +135,11 @@ msgstr ""
 msgid "Hiện icon (kính lúp)"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:175
+#: includes/admin/class-hdpt-settings.php:186
 msgid "Hiệu ứng mở"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:454
+#: includes/admin/class-hdpt-settings.php:474
 msgid "Khôi phục mặc định"
 msgstr ""
 
@@ -135,7 +147,7 @@ msgstr ""
 msgid "Khôi phục toàn bộ cài đặt về mặc định?"
 msgstr ""
 
-#: includes/frontend/class-hdpt-frontend.php:212
+#: includes/frontend/class-hdpt-frontend.php:237
 msgid "Không thể hiển thị tài liệu trực tiếp."
 msgstr ""
 
@@ -147,11 +159,11 @@ msgstr ""
 msgid "Kéo để sắp xếp"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:212
+#: includes/admin/class-hdpt-settings.php:223
 msgid "Kế thừa theme"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:453
+#: includes/admin/class-hdpt-settings.php:473
 msgid "Lưu cài đặt"
 msgstr ""
 
@@ -159,7 +171,7 @@ msgstr ""
 msgid "Lớn"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:188
+#: includes/admin/class-hdpt-settings.php:199
 msgid "Màu chữ header"
 msgstr ""
 
@@ -171,11 +183,11 @@ msgstr ""
 msgid "Màu chữ nút"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:189
+#: includes/admin/class-hdpt-settings.php:200
 msgid "Màu icon mũi tên"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:187
+#: includes/admin/class-hdpt-settings.php:198
 msgid "Màu nền header toggle"
 msgstr ""
 
@@ -183,7 +195,7 @@ msgstr ""
 msgid "Màu nền hover"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:169
+#: includes/admin/class-hdpt-settings.php:180
 msgid "Màu nền modal"
 msgstr ""
 
@@ -191,11 +203,11 @@ msgstr ""
 msgid "Màu nền nút"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:190
+#: includes/admin/class-hdpt-settings.php:201
 msgid "Màu nền nội dung"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:167
+#: includes/admin/class-hdpt-settings.php:178
 msgid "Màu overlay"
 msgstr ""
 
@@ -203,49 +215,49 @@ msgstr ""
 msgid "Màu sắc, bo góc, padding, icon… của nút được lấy từ trang cài đặt plugin: Sản phẩm → Truy xuất nguồn gốc."
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:170
+#: includes/admin/class-hdpt-settings.php:181
 msgid "Màu tiêu đề modal"
 msgstr ""
 
 #: includes/admin/class-hdpt-product-data.php:166
-#: includes/class-hdpt-plugin.php:142
+#: includes/class-hdpt-plugin.php:147
 msgid "Mã số thuế"
 msgstr ""
 
-#: includes/frontend/class-hdpt-frontend.php:213
-#: includes/frontend/class-hdpt-frontend.php:434
+#: includes/frontend/class-hdpt-frontend.php:238
+#: includes/frontend/class-hdpt-frontend.php:500
 msgid "Mở file PDF"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:234
+#: includes/admin/class-hdpt-settings.php:245
 msgid "Nhãn \"Thông tin doanh nghiệp\""
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:233
+#: includes/admin/class-hdpt-settings.php:244
 msgid "Nhãn \"Thông tin truy xuất\""
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:239
+#: includes/admin/class-hdpt-settings.php:250
 msgid "Nhãn: Email"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:236
+#: includes/admin/class-hdpt-settings.php:247
 msgid "Nhãn: Mã số thuế"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:235
+#: includes/admin/class-hdpt-settings.php:246
 msgid "Nhãn: Tên doanh nghiệp"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:240
+#: includes/admin/class-hdpt-settings.php:251
 msgid "Nhãn: Website"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:238
+#: includes/admin/class-hdpt-settings.php:249
 msgid "Nhãn: Điện thoại"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:237
+#: includes/admin/class-hdpt-settings.php:248
 msgid "Nhãn: Địa chỉ đăng ký kinh doanh"
 msgstr ""
 
@@ -265,7 +277,7 @@ msgstr ""
 msgid "Padding nút"
 msgstr ""
 
-#: includes/frontend/class-hdpt-frontend.php:214
+#: includes/frontend/class-hdpt-frontend.php:239
 msgid "Phóng to"
 msgstr ""
 
@@ -285,23 +297,19 @@ msgstr ""
 msgid "Plugin \"HD Product Traceability\" yêu cầu WordPress 6.0 trở lên."
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:157
-msgid "Sau nút thêm vào giỏ"
+#: includes/admin/class-hdpt-settings.php:167
+msgid "Priority trong phần tóm tắt"
 msgstr ""
 
 #: includes/admin/class-hdpt-settings.php:158
 msgid "Sau phần tóm tắt sản phẩm"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:159
-msgid "Sau tabs mô tả"
-msgstr ""
-
-#: includes/admin/class-hdpt-settings.php:181
+#: includes/admin/class-hdpt-settings.php:192
 msgid "Slide (trượt lên)"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:213
+#: includes/admin/class-hdpt-settings.php:224
 msgid "System font"
 msgstr ""
 
@@ -314,7 +322,7 @@ msgstr ""
 msgid "Text nút"
 msgstr ""
 
-#: includes/frontend/class-hdpt-frontend.php:215
+#: includes/frontend/class-hdpt-frontend.php:240
 msgid "Thu nhỏ"
 msgstr ""
 
@@ -322,7 +330,7 @@ msgstr ""
 msgid "Thêm các file PDF truy xuất nguồn gốc. Kéo thả để sắp xếp thứ tự hiển thị."
 msgstr ""
 
-#: includes/class-hdpt-plugin.php:140
+#: includes/class-hdpt-plugin.php:145
 msgid "Thông tin doanh nghiệp"
 msgstr ""
 
@@ -330,11 +338,11 @@ msgstr ""
 msgid "Thông tin doanh nghiệp (ký cam kết/hợp đồng)"
 msgstr ""
 
-#: includes/class-hdpt-plugin.php:139
+#: includes/class-hdpt-plugin.php:144
 msgid "Thông tin truy xuất"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:232
+#: includes/admin/class-hdpt-settings.php:243
 msgid "Tiêu đề modal"
 msgstr ""
 
@@ -342,7 +350,7 @@ msgstr ""
 msgid "Tiêu đề tài liệu (bắt buộc khi có file)"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:198
+#: includes/admin/class-hdpt-settings.php:209
 msgid "Toggle đầu tiên mở sẵn"
 msgstr ""
 
@@ -351,17 +359,21 @@ msgid "Toàn bộ chiều ngang"
 msgstr ""
 
 #. translators: %1$s: trang hiện tại, %2$s: tổng số trang.
-#: includes/frontend/class-hdpt-frontend.php:218
+#: includes/frontend/class-hdpt-frontend.php:243
 msgid "Trang %1$s / %2$s"
 msgstr ""
 
-#: includes/admin/class-hdpt-product-data.php:45
+#: includes/admin/class-hdpt-settings.php:157
+msgid "Trong phần tóm tắt sản phẩm (sau khối mua hàng/nút liên hệ)"
+msgstr ""
+
 #: includes/admin/class-hdpt-settings.php:56
+#: includes/admin/class-hdpt-product-data.php:45
 #: includes/class-hdpt-plugin.php:105
 msgid "Truy xuất nguồn gốc"
 msgstr ""
 
-#: includes/class-hdpt-plugin.php:138
+#: includes/class-hdpt-plugin.php:143
 msgid "Truy xuất nguồn gốc sản phẩm"
 msgstr ""
 
@@ -373,7 +385,7 @@ msgstr ""
 msgid "Trường tùy chọn bỏ trống sẽ không hiển thị ngoài trang sản phẩm."
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:193
+#: includes/admin/class-hdpt-settings.php:204
 msgid "Trạng thái mặc định"
 msgstr ""
 
@@ -381,20 +393,20 @@ msgstr ""
 msgid "Tài liệu truy xuất (PDF)"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:220
+#: includes/admin/class-hdpt-settings.php:231
 msgid "Tên Google Font"
 msgstr ""
 
 #: includes/admin/class-hdpt-product-data.php:162
-#: includes/class-hdpt-plugin.php:141
+#: includes/class-hdpt-plugin.php:146
 msgid "Tên doanh nghiệp"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:443
+#: includes/admin/class-hdpt-settings.php:463
 msgid "Tùy biến giao diện nút truy xuất, modal, accordion và nhãn hiển thị. Dữ liệu truy xuất của từng sản phẩm nhập trong tab \"Truy xuất nguồn gốc\" khi sửa sản phẩm."
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:199
+#: includes/admin/class-hdpt-settings.php:210
 msgid "Tất cả đóng"
 msgstr ""
 
@@ -402,12 +414,8 @@ msgstr ""
 msgid "Tự động"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:225
+#: includes/admin/class-hdpt-settings.php:236
 msgid "Ví dụ: Be Vietnam Pro. Plugin sẽ tự enqueue font từ Google Fonts."
-msgstr ""
-
-#: includes/admin/class-hdpt-settings.php:162
-msgid "Vị trí nút trên trang sản phẩm. Chọn \"Không tự động chèn\" nếu chỉ dùng shortcode/widget."
 msgstr ""
 
 #: includes/admin/class-hdpt-settings.php:152
@@ -418,12 +426,12 @@ msgstr ""
 msgid "Vừa"
 msgstr ""
 
-#: includes/frontend/class-hdpt-frontend.php:216
+#: includes/frontend/class-hdpt-frontend.php:241
 msgid "Vừa chiều rộng"
 msgstr ""
 
 #: includes/admin/class-hdpt-product-data.php:184
-#: includes/class-hdpt-plugin.php:146
+#: includes/class-hdpt-plugin.php:151
 msgid "Website"
 msgstr ""
 
@@ -435,37 +443,37 @@ msgstr ""
 msgid "Xóa dòng tài liệu này?"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:249
+#: includes/admin/class-hdpt-settings.php:260
 msgid "Xóa dữ liệu khi gỡ plugin"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:253
+#: includes/admin/class-hdpt-settings.php:264
 msgid "Xóa toàn bộ dữ liệu cài đặt (option + meta sản phẩm) khi gỡ plugin. Mặc định giữ nguyên."
 msgstr ""
 
-#: includes/frontend/class-hdpt-frontend.php:211
+#: includes/frontend/class-hdpt-frontend.php:236
 msgid "Đang tải tài liệu…"
 msgstr ""
 
-#: includes/class-hdpt-plugin.php:144
+#: includes/class-hdpt-plugin.php:149
 msgid "Điện thoại"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:373
+#: includes/admin/class-hdpt-settings.php:384
 msgid "Đã khôi phục toàn bộ cài đặt về mặc định."
 msgstr ""
 
-#: includes/frontend/class-hdpt-frontend.php:219
-#: includes/frontend/class-hdpt-frontend.php:346
+#: includes/frontend/class-hdpt-frontend.php:244
+#: includes/frontend/class-hdpt-frontend.php:406
 msgid "Đóng"
 msgstr ""
 
 #: includes/admin/class-hdpt-product-data.php:170
-#: includes/class-hdpt-plugin.php:143
+#: includes/class-hdpt-plugin.php:148
 msgid "Địa chỉ đăng ký kinh doanh"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:168
+#: includes/admin/class-hdpt-settings.php:179
 msgid "Độ mờ overlay (%)"
 msgstr ""
 
@@ -473,7 +481,7 @@ msgstr ""
 msgid "Độ rộng nút"
 msgstr ""
 
-#: includes/admin/class-hdpt-settings.php:172
+#: includes/admin/class-hdpt-settings.php:183
 msgid "Độ rộng tối đa (px)"
 msgstr ""
 
