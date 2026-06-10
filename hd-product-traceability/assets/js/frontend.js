@@ -195,6 +195,66 @@
 		}
 	} );
 
+	/* -----------------------------------------------------------------
+	 * Fallback auto-insert: với theme/Elementor template không chạy hook
+	 * summary của WooCommerce, PHP in nút (ẩn) ở footer kèm [data-hdpt-fallback];
+	 * JS di chuyển nút vào vị trí hợp lý trong layout rồi hiển thị.
+	 * ----------------------------------------------------------------- */
+	function placeFallbackButtons() {
+		var fallbacks = document.querySelectorAll( '[data-hdpt-fallback]' );
+		if ( ! fallbacks.length ) {
+			return;
+		}
+
+		// Thứ tự ưu tiên anchor: khối add-to-cart -> nút liên hệ (tel:) ->
+		// giá -> summary -> container sản phẩm.
+		var anchors = [
+			{ selector: '.single-product div.product form.cart', mode: 'after' },
+			{ selector: '.elementor-widget-woocommerce-product-add-to-cart', mode: 'after' },
+			{ selector: '.single-product div.product a[href^="tel:"]', mode: 'after' },
+			{ selector: '.single-product div.product p.price', mode: 'after' },
+			{ selector: '.elementor-widget-woocommerce-product-price', mode: 'after' },
+			{ selector: '.single-product div.product .summary', mode: 'append' },
+			{ selector: '.single-product div.product', mode: 'append' }
+		];
+
+		Array.prototype.forEach.call( fallbacks, function ( wrap ) {
+			var btn = wrap.firstElementChild;
+			if ( ! btn ) {
+				wrap.remove();
+				return;
+			}
+
+			var placed = false;
+			for ( var i = 0; i < anchors.length && ! placed; i++ ) {
+				var anchor = document.querySelector( anchors[ i ].selector );
+				if ( ! anchor ) {
+					continue;
+				}
+				if ( 'append' === anchors[ i ].mode ) {
+					anchor.appendChild( btn );
+				} else {
+					anchor.insertAdjacentElement( 'afterend', btn );
+				}
+				placed = true;
+			}
+
+			if ( ! placed ) {
+				// Không tìm được anchor nào: vẫn hiển thị nút tại chỗ
+				// (cuối trang) thay vì ẩn mất chức năng.
+				wrap.insertAdjacentElement( 'beforebegin', btn );
+			}
+
+			wrap.remove();
+		} );
+	}
+
+	if ( 'loading' === document.readyState ) {
+		document.addEventListener( 'DOMContentLoaded', placeFallbackButtons );
+	} else {
+		placeFallbackButtons();
+	}
+
 	document.addEventListener( 'keydown', function ( event ) {
 		var modal = getOpenModal();
 		if ( ! modal ) {

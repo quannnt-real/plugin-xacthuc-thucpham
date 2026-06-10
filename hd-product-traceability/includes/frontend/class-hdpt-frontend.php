@@ -61,6 +61,9 @@ class HDPT_Frontend {
 
 		add_action( 'wp', array( $this, 'setup_auto_insert' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_enqueue_assets' ) );
+		// Priority 4: fallback phải chạy TRƯỚC render_modals (5) để modal
+		// của sản phẩm fallback kịp được ghi nhận và render.
+		add_action( 'wp_footer', array( $this, 'render_fallback_button' ), 4 );
 		add_action( 'wp_footer', array( $this, 'render_modals' ), 5 );
 	}
 
@@ -332,6 +335,41 @@ class HDPT_Frontend {
 		$b = hexdec( substr( $hex, 4, 2 ) );
 
 		return sprintf( 'rgba(%d,%d,%d,%s)', $r, $g, $b, (string) max( 0, min( 1, $alpha ) ) );
+	}
+
+	/**
+	 * Fallback auto-insert ở wp_footer cho theme/template KHÔNG chạy các hook
+	 * summary chuẩn của WooCommerce (vd: trang sản phẩm dựng bằng Elementor
+	 * template — woocommerce_single_product_summary không bao giờ fire, hoặc
+	 * site đã remove_action toàn bộ khu vực add-to-cart).
+	 *
+	 * Nếu đến wp_footer mà nút vẫn chưa được render (qua hook/shortcode/widget),
+	 * in nút trong wrapper ẩn; JS frontend sẽ di chuyển nút vào vị trí hợp lý
+	 * trong layout (sau khối add-to-cart/giá/summary) rồi hiển thị.
+	 */
+	public function render_fallback_button() {
+		if ( ! is_product() ) {
+			return;
+		}
+
+		$settings = HDPT_Plugin::get_settings();
+		if ( 'none' === $settings['btn_position'] ) {
+			return;
+		}
+
+		$product_id = absint( get_queried_object_id() );
+
+		// Nút đã hiển thị trên trang (hook/shortcode/widget) -> không cần fallback.
+		if ( in_array( $product_id, $this->rendered_products, true ) ) {
+			return;
+		}
+
+		$html = $this->get_button_html( $product_id );
+		if ( '' === $html ) {
+			return;
+		}
+
+		echo '<div class="hdpt-btn-fallback" data-hdpt-fallback hidden>' . $html . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML đã được escape từng phần khi build.
 	}
 
 	/**
