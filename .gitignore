@@ -5,3 +5,6 @@ KE-HOACH-PLUGIN-TRUY-XUAT-NGUON-GOC.md
 
 # Hệ thống
 .DS_Store
+
+# Bản đóng gói phát hành — không đưa lên repo
+*.zip

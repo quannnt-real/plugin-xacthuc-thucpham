@@ -1,0 +1,423 @@
+/*
+ * Frontend CSS — toàn bộ style dùng CSS custom properties (--hdpt-*),
+ * giá trị biến được in inline từ settings. Scoped bằng prefix .hdpt-.
+ * Package: HD_Product_Traceability
+ */
+
+/* ---------- Nút truy xuất ---------- */
+.hdpt-btn-wrap {
+	margin: 12px 0;
+}
+
+.hdpt-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: var(--hdpt-btn-padding, 12px 24px);
+	background: var(--hdpt-btn-bg, #2e7d32);
+	color: var(--hdpt-btn-color, #fff);
+	border: none;
+	border-radius: var(--hdpt-btn-radius, 4px);
+	font-family: var(--hdpt-font-family, inherit);
+	font-size: var(--hdpt-font-size, 15px);
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.hdpt-btn:hover,
+.hdpt-btn:focus {
+	background: var(--hdpt-btn-bg-hover, #1b5e20);
+	color: var(--hdpt-btn-color-hover, #fff);
+}
+
+.hdpt-btn--full {
+	display: flex;
+	width: 100%;
+}
+
+.hdpt-btn__icon {
+	flex: 0 0 auto;
+}
+
+/* ---------- Modal ---------- */
+.hdpt-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: none;
+	font-family: var(--hdpt-font-family, inherit);
+	font-size: var(--hdpt-font-size, 15px);
+}
+
+.hdpt-modal.hdpt-modal--open {
+	display: block;
+}
+
+.hdpt-modal__overlay {
+	position: absolute;
+	inset: 0;
+	background: var(--hdpt-overlay, rgba(0, 0, 0, 0.7));
+	cursor: pointer;
+}
+
+.hdpt-modal__dialog {
+	position: relative;
+	z-index: 1;
+	width: calc(100% - 24px);
+	max-width: var(--hdpt-modal-max-width, 860px);
+	max-height: calc(100vh - 32px);
+	max-height: calc(100dvh - 32px);
+	margin: 16px auto;
+	display: flex;
+	flex-direction: column;
+	background: var(--hdpt-modal-bg, #fff);
+	border-radius: var(--hdpt-modal-radius, 8px);
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+}
+
+/* Hiệu ứng mở */
+.hdpt-modal--fade .hdpt-modal__dialog,
+.hdpt-modal--fade .hdpt-modal__overlay {
+	animation: hdpt-fade 0.25s ease both;
+}
+
+.hdpt-modal--slide .hdpt-modal__overlay {
+	animation: hdpt-fade 0.25s ease both;
+}
+
+.hdpt-modal--slide .hdpt-modal__dialog {
+	animation: hdpt-slide-up 0.3s ease both;
+}
+
+@keyframes hdpt-fade {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes hdpt-slide-up {
+	from { opacity: 0; transform: translateY(40px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hdpt-modal .hdpt-modal__dialog,
+	.hdpt-modal .hdpt-modal__overlay {
+		animation: none;
+	}
+}
+
+.hdpt-modal__close {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 2;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	background: transparent;
+	color: var(--hdpt-modal-title-color, #1f2937);
+	font-size: 26px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.hdpt-modal__close:hover {
+	background: rgba(0, 0, 0, 0.06);
+}
+
+.hdpt-modal__title {
+	margin: 0;
+	padding: 18px 56px 14px 20px;
+	color: var(--hdpt-modal-title-color, #1f2937);
+	font-size: calc(var(--hdpt-font-size, 15px) + 5px);
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.hdpt-modal__body {
+	padding: 0 20px 20px;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+/* Khóa scroll body khi modal mở (class gắn vào <body>) */
+body.hdpt-modal-locked {
+	overflow: hidden;
+}
+
+/* ---------- Accordion ---------- */
+.hdpt-accordion {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.hdpt-acc-item {
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+/* Heading bọc button toggle: hiển thị như tiêu đề mục, không phải nút. */
+.hdpt-modal .hdpt-acc-heading {
+	margin: 0;
+	padding: 0;
+	font-size: inherit;
+	line-height: inherit;
+	border: 0;
+}
+
+/* Reset triệt để để theme không áp style button (bo tròn, uppercase, shadow…). */
+.hdpt-modal .hdpt-acc-header,
+.hdpt-modal .hdpt-acc-header:hover,
+.hdpt-modal .hdpt-acc-header:focus,
+.hdpt-modal .hdpt-acc-header:active {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+	min-height: 0;
+	margin: 0;
+	padding: 12px 14px;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	outline: none;
+	transform: none;
+	background: var(--hdpt-acc-header-bg, #f3f4f6);
+	background-image: none;
+	color: var(--hdpt-acc-header-color, #1f2937);
+	font-family: var(--hdpt-font-family, inherit);
+	font-size: calc(var(--hdpt-font-size, 15px) + 1px);
+	font-weight: 700;
+	line-height: 1.4;
+	letter-spacing: normal;
+	text-transform: none;
+	text-decoration: none;
+	text-shadow: none;
+	text-align: left;
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.hdpt-modal .hdpt-acc-header > span {
+	flex: 1 1 auto;
+}
+
+.hdpt-acc-arrow {
+	flex: 0 0 auto;
+	color: var(--hdpt-acc-icon-color, #6b7280);
+	transition: transform 0.2s ease;
+}
+
+.hdpt-acc-header[aria-expanded="true"] .hdpt-acc-arrow {
+	transform: rotate(180deg);
+}
+
+.hdpt-acc-content {
+	padding: 14px;
+	background: var(--hdpt-acc-content-bg, #fff);
+}
+
+.hdpt-modal .hdpt-accordion--sub .hdpt-acc-header {
+	font-size: var(--hdpt-font-size, 15px);
+	font-weight: 600;
+	padding: 10px 12px;
+}
+
+/* ---------- Thông tin doanh nghiệp ---------- */
+.hdpt-business {
+	display: grid;
+	grid-template-columns: minmax(120px, 200px) 1fr;
+	gap: 8px 16px;
+	margin: 0;
+}
+
+.hdpt-business dt {
+	font-weight: 600;
+	color: inherit;
+}
+
+.hdpt-business dd {
+	margin: 0;
+	word-break: break-word;
+}
+
+.hdpt-business a {
+	color: var(--hdpt-btn-bg, #2e7d32);
+	text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+	.hdpt-business {
+		grid-template-columns: 1fr;
+		gap: 2px 0;
+	}
+
+	.hdpt-business dd {
+		margin-bottom: 10px;
+	}
+}
+
+/* ---------- PDF viewer ---------- */
+.hdpt-pdf {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.hdpt-pdf__toolbar {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
+	padding: 8px;
+	background: var(--hdpt-acc-header-bg, #f3f4f6);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hdpt-pdf__toolbar button {
+	min-width: 36px;
+	min-height: 0;
+	height: 32px;
+	margin: 0;
+	padding: 0 10px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+	box-shadow: none;
+	background: #fff;
+	background-image: none;
+	color: var(--hdpt-acc-header-color, #1f2937);
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	cursor: pointer;
+	touch-action: manipulation;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.hdpt-pdf__toolbar button:hover {
+	background: #f0f0f1;
+}
+
+.hdpt-pdf__zoom-level {
+	min-width: 48px;
+	text-align: center;
+	font-size: 13px;
+	font-variant-numeric: tabular-nums;
+}
+
+.hdpt-pdf__page-info {
+	margin-left: auto;
+	font-size: 13px;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.hdpt-pdf__scroll {
+	position: relative;
+	height: 70vh;
+	max-height: 70vh;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	background: #525659;
+	touch-action: pan-x pan-y;
+}
+
+.hdpt-pdf__page {
+	position: relative;
+	margin: 10px auto;
+	background: #fff;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.hdpt-pdf__page canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.hdpt-pdf__status {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	padding: 24px 12px;
+	color: #50575e;
+	background: var(--hdpt-acc-content-bg, #fff);
+}
+
+.hdpt-pdf__spinner {
+	width: 22px;
+	height: 22px;
+	border: 3px solid rgba(0, 0, 0, 0.15);
+	border-top-color: var(--hdpt-btn-bg, #2e7d32);
+	border-radius: 50%;
+	animation: hdpt-spin 0.8s linear infinite;
+}
+
+@keyframes hdpt-spin {
+	to { transform: rotate(360deg); }
+}
+
+.hdpt-pdf__fallback {
+	margin: 0;
+	padding: 16px;
+	text-align: center;
+}
+
+.hdpt-pdf__fallback a {
+	color: var(--hdpt-btn-bg, #2e7d32);
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+/* Fallback chỉ hiển thị khi không có JS hoặc viewer lỗi:
+   - data-hdpt-init được JS gắn ngay khi bắt đầu khởi tạo viewer -> ẩn fallback;
+   - lỗi -> JS thêm .hdpt-pdf--error -> hiện lại link "Mở file PDF". */
+.hdpt-pdf[data-hdpt-init]:not(.hdpt-pdf--error) > .hdpt-pdf__fallback,
+.hdpt-pdf--active > .hdpt-pdf__fallback {
+	display: none;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+	.hdpt-modal__dialog {
+		width: calc(100% - 12px);
+		margin: 8px auto;
+		max-height: calc(100vh - 16px);
+		max-height: calc(100dvh - 16px);
+	}
+
+	.hdpt-modal__title {
+		padding: 14px 48px 10px 14px;
+	}
+
+	.hdpt-modal__body {
+		padding: 0 10px 12px;
+	}
+
+	.hdpt-pdf__scroll {
+		height: 62vh;
+		max-height: 62vh;
+	}
+
+	.hdpt-pdf__page-info {
+		margin-left: 0;
+		width: 100%;
+		text-align: right;
+	}
+}

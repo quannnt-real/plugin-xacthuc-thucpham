@@ -1,0 +1,103 @@
+/*
+ * Admin CSS: tab Truy xuất nguồn gốc (Product Data) + trang cài đặt.
+ * Package: HD_Product_Traceability
+ */
+
+/* ---------- Product Data: nhóm & tiêu đề ---------- */
+#hdpt_product_data_panel .hdpt-group-title {
+	margin: 0;
+	padding: 12px 12px 0;
+	font-size: 13px;
+}
+
+#hdpt_product_data_panel .hdpt-group-desc {
+	padding: 0 12px;
+	margin: 4px 0 8px;
+}
+
+#hdpt_product_data_panel .hdpt-required {
+	color: #d63638;
+}
+
+/* ---------- Repeater tài liệu PDF ---------- */
+.hdpt-doc-rows {
+	margin: 0 12px 8px;
+	padding: 0;
+	list-style: none;
+}
+
+.hdpt-doc-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px;
+	margin: 0 0 6px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+.hdpt-doc-row-placeholder {
+	height: 40px;
+	margin: 0 0 6px;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	background: #fff;
+	list-style: none;
+}
+
+.hdpt-doc-handle {
+	cursor: move;
+	color: #787c82;
+	flex: 0 0 auto;
+}
+
+.hdpt-doc-row .hdpt-doc-title {
+	flex: 1 1 220px;
+	min-width: 160px;
+}
+
+.hdpt-doc-filename {
+	flex: 1 1 auto;
+	font-style: italic;
+	color: #2271b1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 260px;
+}
+
+.hdpt-doc-filename--empty {
+	color: #787c82;
+}
+
+.hdpt-remove-doc {
+	color: #d63638;
+	font-size: 18px;
+	line-height: 1;
+	text-decoration: none;
+	flex: 0 0 auto;
+	cursor: pointer;
+}
+
+.hdpt-doc-actions {
+	padding: 0 12px 12px;
+	margin: 0;
+}
+
+/* ---------- Trang cài đặt ---------- */
+.hdpt-settings-page .form-table th {
+	width: 240px;
+}
+
+.hdpt-settings-page h2 {
+	margin-top: 28px;
+	padding-top: 16px;
+	border-top: 1px solid #dcdcde;
+}
+
+.hdpt-settings-page .hdpt-submit-row {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
