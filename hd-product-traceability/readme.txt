@@ -4,7 +4,7 @@ Tags: woocommerce, traceability, truy xuat nguon goc, pdf, product
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,14 @@ Viewer tự fallback sang link "Mở file PDF" ở tab mới khi trình duyệt 
 Mặc định: không. PDF.js được bundle sẵn trong plugin, không tải từ CDN. Duy nhất khi bạn chủ động chọn nguồn font "Google Font" trong cài đặt Typography, trình duyệt của khách sẽ tải font từ fonts.googleapis.com (cân nhắc về quyền riêng tư/GDPR nếu cần).
 
 == Changelog ==
+
+= 1.1.0 =
+* Tương thích chế độ catalog/liên hệ báo giá: nút hiển thị cả khi sản phẩm không mua được (woocommerce_is_purchasable = false) hoặc không có giá; plugin không đọc/phụ thuộc giá ở bất kỳ logic nào.
+* Vị trí auto-insert mới chỉ dùng hook luôn chạy: trong phần tóm tắt (priority cấu hình được, mặc định 35), sau phần tóm tắt, cuối phần thông tin sản phẩm; tự migrate cài đặt cũ.
+* Fallback JS chèn nút trên theme/Elementor template không gọi hook WooCommerce; chống chèn vào trong thẻ <a> (link "Liên hệ" của giá, link product card), click không bị anchor nuốt (stopPropagation).
+* Header accordion hiển thị dạng tiêu đề (h3/h4 + reset CSS chống style button của theme).
+* Fix PDF viewer không khởi tạo (kiểm tra sai kiểu HDPTPdfViewer); fallback "Mở file PDF" chỉ hiện khi viewer thực sự lỗi.
+* Modal luôn được đưa về cuối <body>.
 
 = 1.0.0 =
 * Phát hành lần đầu: Product Data tab (repeater PDF + thông tin doanh nghiệp), trang cài đặt đầy đủ, nút auto-insert/shortcode/Elementor widget, modal accordion 2 cấp, PDF.js viewer (zoom, fit-width, lazy-load, page counter, fallback), i18n tiếng Việt.
